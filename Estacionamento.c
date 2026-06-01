@@ -21,7 +21,7 @@ int menu() {
     printf("0 - Sair\n");
     
     printf("Qual sua escolha? ");
-    int escolha;
+    int escolha; 
     scanf("%d", &escolha);
     return escolha;
 }
@@ -32,9 +32,34 @@ void EntradaVeiculo (
     char modelo[][30],
     char cor[][30],
     int vaga[10],
-    int *totalVeiculos
+    int *totalVeiculos,
+    int VagasTotais
 ) {
     system("cls");
+
+    if(*totalVeiculos >= VagasTotais){
+        printf("Estacionamento lotado!\n");
+        SairDaTela();
+        return;
+    }
+
+    printf("Vaga que vai ser ocupada: ");
+    scanf("%d", &vaga[*totalVeiculos]);
+    
+    if(vaga[*totalVeiculos] <= 0 || vaga[*totalVeiculos] > VagasTotais){
+        printf("Vaga indisponivel!\n");
+        SairDaTela();
+        return;
+    }
+
+    for(int i = 0; i < *totalVeiculos; i++){
+        if(vaga[*totalVeiculos] == vaga[i]){
+            printf("Vaga preenchida.\n");
+            SairDaTela();
+            return;
+        }
+    }
+
     getchar();
 
     printf("Placa do veiculo: ");
@@ -49,8 +74,6 @@ void EntradaVeiculo (
     printf("Cor do veiculo: ");
     fgets(cor[*totalVeiculos], sizeof(cor[*totalVeiculos]), stdin);
 
-    printf("Vaga que vai ser ocupada: ");
-    scanf("%d", &vaga[*totalVeiculos]);
 
     (*totalVeiculos)++;
 
@@ -67,10 +90,23 @@ void AlterarOuRemover(
     int *totalVeiculos
 ) {
     int veiculoASerEditado;
+    bool VagaVazia = true;
 
     system("cls");
     printf("Veiculo de qual vaga deseja editar? ");
     scanf("%d", &veiculoASerEditado);
+
+    for(int i = 0; i < *totalVeiculos; i++){
+        if(vaga[veiculoASerEditado] == vaga[i]){
+            VagaVazia = false;
+        }
+    }
+
+    if(VagaVazia == true){
+        printf("Vaga vazia.\n");
+        SairDaTela();
+        return;
+    }
 
     printf("1 - Veiculo cadastrado na vaga %d\n", veiculoASerEditado);
     printf("2 - Placa do veiculo: %s", placa[veiculoASerEditado - 1]);
@@ -80,6 +116,8 @@ void AlterarOuRemover(
 
     printf("O que deseja editar? ");
     getch();
+
+    SairDaTela();
 }
 
 void ListarVagasCheias(
@@ -93,6 +131,13 @@ void ListarVagasCheias(
 ) {
 
     system("cls");
+
+    if(totalVeiculos == 0){
+        printf("Nenhuma vaga preenchida.\n");
+        SairDaTela();
+        return;
+    }
+
     printf("Todas as vagas cheias:\n");
 
     for(int v = 1; v <= vagasTotais; v++){
@@ -116,8 +161,7 @@ void BuscarVeiculoPorVaga(
     char modelo[][30],
     char cor[][30],
     int vaga[10],
-    int totalVeiculos,
-    int vagasTotais
+    int totalVeiculos
 ) {
 
     int vagaDesejada;
@@ -126,7 +170,7 @@ void BuscarVeiculoPorVaga(
     printf("Qual vaga deseja ver o veiculo? ");
     scanf("%d", &vagaDesejada);
 
-    for(int i = 0; i <= totalVeiculos; i++){
+    for(int i = 0; i < totalVeiculos; i++){
         if(vaga[i] == vagaDesejada){
             if(placa[i][0] != '\0'){
                 printf("Placa do veiculo: %s", placa[i]);
@@ -158,8 +202,9 @@ void ExibirTotalDeVagas(
 
     int vagasPreenchidas = 0;
     system("cls");
-    printf("Total de veículos: %d", totalVeiculos);
-    printf("\nVagas preenchidas: \n");
+    printf("Total de vagas: %d\n", vagasTotais);
+    printf("Total de veiculos: %d\n", totalVeiculos);
+    printf("Vagas preenchidas: \n");
 
     for(int i = 0; i < totalVeiculos; i++){
         printf("%d\n", vaga[i]);
@@ -183,7 +228,7 @@ int main() {
     while(escolha != 0){    
         switch (escolha){
             case 1:
-                EntradaVeiculo(placa, marca, modelo , cor, vaga ,&totalVeiculos);
+                EntradaVeiculo(placa, marca, modelo , cor, vaga ,&totalVeiculos, vagasTotais);
                 break;
             case 2:
                 AlterarOuRemover(placa, marca, modelo , cor, vaga ,&totalVeiculos);
@@ -192,7 +237,7 @@ int main() {
                 ListarVagasCheias(placa, marca, modelo , cor, vaga , totalVeiculos, vagasTotais);
                 break;
             case 4:
-                BuscarVeiculoPorVaga(placa, marca, modelo , cor, vaga , totalVeiculos, vagasTotais);
+                BuscarVeiculoPorVaga(placa, marca, modelo , cor, vaga , totalVeiculos);
                 break;
             case 5:
                 ExibirTotalDeVagas(placa, marca, modelo , cor, vaga , totalVeiculos, vagasTotais);
