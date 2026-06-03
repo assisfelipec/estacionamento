@@ -81,7 +81,7 @@ void EntradaVeiculo (
     SairDaTela();
 }
 
-void AlterarOuRemover(
+void AlterarAtributo(
     char placa[][10],
     char marca[][30],
     char modelo[][30],
@@ -89,15 +89,39 @@ void AlterarOuRemover(
     int vaga[10],
     int *totalVeiculos
 ) {
+    
+}
+
+void RemoverVeiculo(
+    char placa[][10],
+    char marca[][30],
+    char modelo[][30],
+    char cor[][30],
+    int vaga[10],
+    int *totalVeiculos
+) {
+    
+}
+
+void MenuAlterarOuRemover(
+    char placa[][10],
+    char marca[][30],
+    char modelo[][30],
+    char cor[][30],
+    int vaga[10],
+    int *totalVeiculos
+) {
+
+    int escolha;
     int veiculoASerEditado;
     bool VagaVazia = true;
 
     system("cls");
-    printf("Veiculo de qual vaga deseja editar? ");
+    printf("Veiculo de qual vaga deseja mudar? ");
     scanf("%d", &veiculoASerEditado);
 
     for(int i = 0; i < *totalVeiculos; i++){
-        if(vaga[veiculoASerEditado] == vaga[i]){
+        if(veiculoASerEditado == vaga[i]){
             VagaVazia = false;
         }
     }
@@ -114,8 +138,30 @@ void AlterarOuRemover(
     printf("4 - Modelo do veiculo: %s", modelo[veiculoASerEditado - 1]);
     printf("5 - Cor do veiculo: %s", cor[veiculoASerEditado - 1]);
 
-    printf("O que deseja editar? ");
-    getch();
+    printf("\nO que deseja fazer?\n");
+
+    printf("1 - Alterar atributos\n");
+    printf("2 - Remover veiculo\n");
+    printf("0 - Voltar ao menu\n");
+
+    printf("\nQual sua escolha? ");
+    scanf("%d", &escolha);
+
+    switch (escolha)
+    {
+    case 1:
+        AlterarAtributo(placa, marca, modelo , cor, vaga ,&totalVeiculos);
+        break;
+    case 2:
+        RemoverVeiculo(placa, marca, modelo , cor, vaga ,&totalVeiculos);
+        break;
+    case 0:
+        printf("Saindo...\n");
+        break;
+    default:
+        printf("Opcao nao existente\n");
+        break;
+    }
 
     SairDaTela();
 }
@@ -204,6 +250,7 @@ void ExibirTotalDeVagas(
     system("cls");
     printf("Total de vagas: %d\n", vagasTotais);
     printf("Total de veiculos: %d\n", totalVeiculos);
+    printf("Vagas restantes: %d\n", (vagasTotais - totalVeiculos));
     printf("Vagas preenchidas: \n");
 
     for(int i = 0; i < totalVeiculos; i++){
@@ -231,7 +278,7 @@ int main() {
                 EntradaVeiculo(placa, marca, modelo , cor, vaga ,&totalVeiculos, vagasTotais);
                 break;
             case 2:
-                AlterarOuRemover(placa, marca, modelo , cor, vaga ,&totalVeiculos);
+                MenuAlterarOuRemover(placa, marca, modelo , cor, vaga ,&totalVeiculos);
                 break;
             case 3:
                 ListarVagasCheias(placa, marca, modelo , cor, vaga , totalVeiculos, vagasTotais);
