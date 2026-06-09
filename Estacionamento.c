@@ -87,7 +87,7 @@ void AlterarAtributo(
     char modelo[][30],
     char cor[][30],
     int vaga[10],
-    int *totalVeiculos
+    int totalVeiculos
 ) {
     
 }
@@ -98,7 +98,7 @@ void RemoverVeiculo(
     char modelo[][30],
     char cor[][30],
     int vaga[10],
-    int *totalVeiculos
+    int totalVeiculos
 ) {
     
 }
@@ -109,7 +109,7 @@ void MenuAlterarOuRemover(
     char modelo[][30],
     char cor[][30],
     int vaga[10],
-    int *totalVeiculos
+    int totalVeiculos
 ) {
 
     int escolha;
@@ -120,7 +120,7 @@ void MenuAlterarOuRemover(
     printf("Veiculo de qual vaga deseja mudar? ");
     scanf("%d", &veiculoASerEditado);
 
-    for(int i = 0; i < *totalVeiculos; i++){
+    for(int i = 0; i < totalVeiculos; i++){
         if(veiculoASerEditado == vaga[i]){
             VagaVazia = false;
         }
@@ -150,10 +150,10 @@ void MenuAlterarOuRemover(
     switch (escolha)
     {
     case 1:
-        AlterarAtributo(placa, marca, modelo , cor, vaga ,&totalVeiculos);
+        AlterarAtributo(placa, marca, modelo , cor, vaga ,totalVeiculos);
         break;
     case 2:
-        RemoverVeiculo(placa, marca, modelo , cor, vaga ,&totalVeiculos);
+        RemoverVeiculo(placa, marca, modelo , cor, vaga ,totalVeiculos);
         break;
     case 0:
         printf("Saindo...\n");
@@ -278,7 +278,7 @@ int main() {
                 EntradaVeiculo(placa, marca, modelo , cor, vaga ,&totalVeiculos, vagasTotais);
                 break;
             case 2:
-                MenuAlterarOuRemover(placa, marca, modelo , cor, vaga ,&totalVeiculos);
+                MenuAlterarOuRemover(placa, marca, modelo , cor, vaga ,totalVeiculos);
                 break;
             case 3:
                 ListarVagasCheias(placa, marca, modelo , cor, vaga , totalVeiculos, vagasTotais);
