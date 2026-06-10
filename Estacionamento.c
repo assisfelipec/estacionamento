@@ -46,25 +46,32 @@ void EntradaVeiculo(
     system("cls");
 
     if(*totalVeiculos >= vagasTotais){
+
         printf("Estacionamento lotado!\n");
         SairDaTela();
         return;
+
     }
 
     printf("Vaga que vai ser ocupada: ");
     scanf("%d", &vaga[*totalVeiculos]);
 
     if(vaga[*totalVeiculos] < 1 || vaga[*totalVeiculos] > vagasTotais){
+        
         printf("Vaga invalida!\n");
         SairDaTela();
         return;
+
     }
 
     for(int i = 0; i < *totalVeiculos; i++){
+
         if(vaga[i] == vaga[*totalVeiculos]){
+
             printf("Essa vaga ja esta ocupada!\n");
             SairDaTela();
             return;
+
         }
     }
 
@@ -102,13 +109,15 @@ void AlterarAtributo(
     int vagaEscolhida
 ){
     int opcao;
+    
+    system("cls");
 
-    printf("\nO que deseja alterar?\n");
+    printf("O que deseja alterar?\n");
     printf("1 - Placa\n");
     printf("2 - Marca\n");
     printf("3 - Modelo\n");
     printf("4 - Cor\n");
-    printf("Opcao: ");
+    printf("Qual sua escolha? ");
     scanf("%d", &opcao);
 
     getchar();
@@ -144,12 +153,13 @@ void AlterarAtributo(
                     break;
 
                 default:
-                    printf("Opcao invalida!\n");
+                    printf("\nEscolha invalida!\n");
                     return;
             }
 
             printf("Alteracao realizada com sucesso!\n");
             return;
+
         }
     }
 }
@@ -181,6 +191,7 @@ void RemoverVeiculo(
 
             printf("Veiculo removido com sucesso!\n");
             return;
+
         }
     }
 
@@ -211,19 +222,26 @@ void MenuAlterarOuRemover(
     scanf("%d", &vagaEscolhida);
 
     for(int i = 0; i < *totalVeiculos; i++){
+        
         if(vaga[i] == vagaEscolhida){
+
             indice = i;
             break;
+
         }
     }
 
     if(indice == -1){
+        
         printf("Vaga vazia!\n");
         SairDaTela();
         return;
+
     }
 
-    printf("\nVeiculo encontrado:\n");
+    system("cls");
+
+    printf("Veiculo encontrado:\n");
     printf("Vaga: %d\n", vaga[indice]);
     printf("Placa: %s\n", placa[indice]);
     printf("Marca: %s\n", marca[indice]);
@@ -234,7 +252,7 @@ void MenuAlterarOuRemover(
     printf("2 - Remover veiculo\n");
     printf("0 - Voltar\n");
 
-    printf("Opcao: ");
+    printf("Qual sua escolha? ");
     scanf("%d", &escolha);
 
     switch(escolha){
@@ -267,7 +285,7 @@ void MenuAlterarOuRemover(
             return;
 
         default:
-            printf("Opcao invalida!\n");
+            printf("Escolha invalida!\n");
     }
 
     SairDaTela();
@@ -362,11 +380,15 @@ void ExibirTotalDeVagas(
     printf("\nVagas ocupadas:\n");
 
     if(totalVeiculos == 0){
+
         printf("Nenhuma.\n");
+
     } else {
 
         for(int i = 0; i < totalVeiculos; i++){
+
             printf("%d\n", vaga[i]);
+
         }
     }
 
@@ -453,7 +475,7 @@ int main(){
                 break;
 
             default:
-                printf("Opcao invalida!\n");
+                printf("Escolha invalida!\n");
                 SairDaTela();
         }
 
